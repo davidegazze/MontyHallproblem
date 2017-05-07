@@ -1,0 +1,150 @@
+<script>
+    function printElems() {
+        var str = "";
+        for(i=0; i<doors.length; i++) {
+            str = str + doors[i] + ",";
+        }
+        console.log("Doors : " + str);
+    }
+
+    function removeElem(item) {
+        var index = doors.indexOf(item);
+        doors.splice(index, 1); 
+    }
+
+    var n = 1000000;
+    var winDoor;
+    var initialChoice;
+    var lastChoice;
+    var removeDoor;
+    var removeDoorIndex;
+    var remainDoor;
+    var remainDoor2;
+    var numberWin = 0;
+    var numberLose = 0;
+    document.writeln("Start Game with n = " + n);
+    var doors;
+    // Monty Hall
+    for(i=0; i<n; i++) {
+        doors = new Array();
+        doors[0] = 0;
+        doors[1] = 1;
+        doors[2] = 2;
+        // Getting win door
+        winDoor = doors[Math.floor((Math.random() * doors.length) + 1) -1];
+        initialChoice = doors[Math.floor((Math.random() * doors.length) + 1) -1];
+        removeElem(winDoor);   
+        if(winDoor != initialChoice)
+            removeElem(initialChoice);
+        removeDoor = doors[Math.floor((Math.random() * doors.length) + 1) -1];
+        if(doors.length == 1)
+            remainDoor = doors[0];
+        else 
+            remainDoor = -1;
+        // Re-add all
+        doors = new Array();
+        if(initialChoice != winDoor) {
+            numberWin++;
+        }
+        else {
+            numberLose++;
+        }
+    }
+    document.writeln("<br>Monty Hall");
+    document.writeln("<br>Proofs  : " + n);
+    document.writeln("<br>Win %   : " + Math.round((numberWin / n) * 10000) / 100);
+    document.writeln("<br>Lose %  : " + Math.round((numberLose / n) * 10000) / 100);
+    var numberWin = 0;
+    var numberLose = 0;
+    // Monty Hall Modified
+    for(i=0; i<n; i++) {
+        doors = new Array();
+        doors[0] = 0;
+        doors[1] = 1;
+        doors[2] = 2;
+        // Getting win door
+        winDoor = doors[Math.floor((Math.random() * doors.length) + 1) -1];
+        initialChoice = doors[Math.floor((Math.random() * doors.length) + 1) -1];
+        removeElem(winDoor);   
+        if(winDoor != initialChoice)
+            removeElem(initialChoice);
+        removeDoor = doors[Math.floor((Math.random() * doors.length) + 1) -1];
+        if(doors.length == 1)
+            remainDoor = doors[0];
+        else 
+            remainDoor = -1;
+        // Re-add all
+        doors = new Array();
+        doors.push(winDoor);
+        doors.push(initialChoice);
+        lastChoice = doors[Math.floor((Math.random() * doors.length) + 1) - 1];
+        if(lastChoice == winDoor) {
+            numberWin++;
+        }
+        else {
+            numberLose++;
+        }
+    }
+    document.writeln("<br>Monty Hall second way");
+    document.writeln("<br>Proofs : " + n);
+    document.writeln("<br>Win %   : " + Math.round((numberWin / n) * 10000) / 100);
+    document.writeln("<br>Lose %  : " + Math.round((numberLose / n) * 10000) / 100);
+    var numberWin = 0;
+    var numberLose = 0;
+    // Dummy Way
+    for(i=0; i<n; i++) {
+        doors = new Array();
+        doors[0] = 0;
+        doors[1] = 1;
+        doors[2] = 2;
+        remainDoor2 = -1;
+        // Getting win door
+        winDoor = doors[Math.floor((Math.random() * doors.length) + 1) -1];
+        initialChoice = doors[Math.floor((Math.random() * doors.length) + 1) -1];
+        removeElem(winDoor);   
+        if(winDoor != initialChoice)
+            removeElem(initialChoice);
+        removeDoor = doors[Math.floor((Math.random() * doors.length) + 1) -1];
+        if(doors.length == 2) {
+            remainDoor2 = doors[1];
+            remainDoor = doors[0];
+        }
+        else  if(doors.length == 1)
+            remainDoor = doors[0];
+        else
+            remainDoor = -1;
+        // Re-add all
+        doors = new Array();
+        doors.push(winDoor);
+        if(winDoor != initialChoice)
+            doors.push(initialChoice);
+        if(remainDoor2 != -1)
+            doors.push(remainDoor2);
+        lastChoice = doors[Math.floor((Math.random() * doors.length) + 1) - 1];
+        if(lastChoice == winDoor) {
+            numberWin++;
+        }
+        else {
+            numberLose++;
+        }
+    }
+    document.writeln("<br>Dummy choice");
+    document.writeln("<br>Proofs : " + n);
+    document.writeln("<br>Win %   : " + Math.round((numberWin / n) * 10000) / 100);
+    document.writeln("<br>Lose %  : " + Math.round((numberLose / n) * 10000) / 100);
+    var numberWin = 0;
+    var numberLose = 0;
+    // Normal Way
+    // Simple choose one door
+    for(i=0; i<n; i++) {
+        // Getting win door
+        winDoor = Math.floor(Math.random() * 3);
+        initialChoice = Math.floor(Math.random() * 3);
+        if(initialChoice == winDoor) numberWin++;
+        else numberLose++;
+    }
+    document.writeln("<br>Normal Way");
+    document.writeln("<br>Proofs : " + n);
+    document.writeln("<br>Win %   : " + Math.round((numberWin / n) * 10000) / 100);
+    document.writeln("<br>Lose %  : " + Math.round((numberLose / n) * 10000) / 100);
+</script>
